@@ -10,6 +10,7 @@ const calzadoColorRoute = require("./calzadoColor.route");
 const calzadoTallaRoute = require("./calzadoTalla.route");
 const colaboradorRolRoute = require("./colaboradorRol.route");
 const logRoute = require('./log.route')
+const imagenRoute = require('./imagen.route')
 
 module.exports = {
   colaboradorRoute,
@@ -23,5 +24,6 @@ module.exports = {
   calzadoColorRoute,
   calzadoTallaRoute,
   colaboradorRolRoute,
-  logRoute
+  logRoute,
+  imagenRoute
 };

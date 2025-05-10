@@ -1,4 +1,8 @@
 const Estante = require("../models/estante.model");
+const {
+  calcularCapacidades,
+  calzadosContenidos,
+} = require("../services/estante.service");
 
 const crearEstante = async (req, res) => {
   try {
@@ -53,10 +57,35 @@ const eliminarEstante = async (req, res) => {
   }
 };
 
+const getCapacidades = async (req, res) => {
+  try {
+    const result = await calcularCapacidades();
+    res.json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Error al obtener totales" });
+  }
+};
+
+const getCalzados = async (req, res) => {
+  try {
+    const result = await calzadosContenidos(req, res);
+    res.json(result);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Error al obtener los calzados" });
+  }
+};
+
 module.exports = {
   crearEstante,
   encontrarEstantes,
   encontrarEstante,
   actualizarEstante,
   eliminarEstante,
+
+  getCapacidades,
+  getCalzados,
 };

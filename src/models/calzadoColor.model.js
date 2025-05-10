@@ -11,12 +11,12 @@ CalzadoColor.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    idCalzado: {
-      type: DataTypes.INTEGER,
+    codigoBarras: {
+      type: DataTypes.STRING,
       allowNull: true,
       references: {
         model: "calzado",
-        key: "idCalzado",
+        key: "codigoBarras",
       },
       onDelete: "SET NULL",
       onUpdate: "CASCADE"

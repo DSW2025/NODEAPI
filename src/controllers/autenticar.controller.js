@@ -17,7 +17,10 @@ const generar = async (req, res) => {
       return res.status(400).json({ mensaje: "Contraseña incorrecta" });
     }
     jwt.sign(
-      { id: colaborador.idColaborador, correoElectronico: colaborador.correoElectronico },
+      {
+        id: colaborador.idColaborador,
+        correoElectronico: colaborador.correoElectronico,
+      },
       TOKEN_SECRET,
       { expiresIn: "1d" }, // Token expira en 1 dia
       (err, token) => {
@@ -27,7 +30,7 @@ const generar = async (req, res) => {
 
         res.cookie("token", token, {
           httpOnly: true, // Impide que el token sea accesible desde JavaScript del navegador
-          secure: process.env.NODE_ENV === "production", // Solo se envía en HTTPS si está en producción
+          secure: process.env.NODE_ENV === "production", 
           maxAge: 24 * 60 * 60 * 1000, // 1 día
           sameSite: "Strict", // Asegura que la cookie solo se envíe en solicitudes del mismo sitio
         });

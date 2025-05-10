@@ -1,11 +1,11 @@
 const { DataTypes, Model } = require("sequelize");
 const sequelize = require("../db");
 
-class CalzadoTalla extends Model {}
+class Imagen extends Model {}
 
-CalzadoTalla.init(
+Imagen.init(
   {
-    idCalzadoTalla: {
+    idImagen: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
@@ -16,27 +16,21 @@ CalzadoTalla.init(
       allowNull: true,
       references: {
         model: "calzado",
-        key: "codigoBarras",
+        key: "codigoBarras"
       },
       onDelete: "SET NULL",
       onUpdate: "CASCADE"
     },
-    idTalla: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: "talla",
-        key: "idTalla",
-      },
-      onDelete: "SET NULL",
-      onUpdate: "CASCADE"
-    }
+    nombreArchivo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     sequelize,
     timestamps: false,
-    modelName: "CalzadoTalla",
-    tableName: "calzado_talla",
+    modelName: "Imagen",
+    tableName: "imagen",
   }
 );
-module.exports = CalzadoTalla;
+module.exports = Imagen;

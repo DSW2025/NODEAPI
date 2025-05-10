@@ -7,8 +7,9 @@ const Talla = require("./talla.model");
 const Calzado = require("./calzado.model");
 const CalzadoEstante = require("./calzadoEstante.model");
 const CalzadoColor = require("./calzadoColor.model");
-const CalzadoTalla = require("./calzadotalla.model");
+const CalzadoTalla = require("./calzadoTalla.model");
 const ColaboradorRol = require("./colaboradorRol.model");
+const Imagen = require('./imagen.model')
 
 module.exports = {
   Colaborador,
@@ -21,5 +22,6 @@ module.exports = {
   CalzadoEstante,
   CalzadoColor,
   CalzadoTalla,
-  ColaboradorRol
+  ColaboradorRol,
+  Imagen
 };

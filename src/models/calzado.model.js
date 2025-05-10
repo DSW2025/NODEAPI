@@ -5,23 +5,22 @@ class Calzado extends Model {}
 
 Calzado.init(
   {
-    idCalzado: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    codigoBarras: {
       primaryKey: true,
-      autoIncrement: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    idMarca : {
-        type : DataTypes.INTEGER,
-        allowNull : true,
-        references : {
-            model : "marca",
-            key : "idMarca"
-        },
-        onDelete : "SET NULL",
-        onUpdate : "CASCADE"
+    idMarca: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "marca",
+        key: "idMarca",
+      },
+      onDelete: "SET NULL",
+      onUpdate: "CASCADE",
     },
-    calzado : {
+    modelo: {
       type: DataTypes.STRING,
       allowNull: false,
     },

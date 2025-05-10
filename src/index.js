@@ -1,7 +1,7 @@
 const express = require("express");
 const sequelize = require("./db");
 const cookieParser = require("cookie-parser");
-const cors = require('cors');
+const cors = require("cors");
 
 // rutas
 const {
@@ -17,6 +17,7 @@ const {
   calzadoTallaRoute,
   colaboradorRolRoute,
   logRoute,
+  imagenRoute,
 } = require("./routes/index");
 
 // modelos
@@ -32,6 +33,7 @@ const {
   CalzadoColor,
   CalzadoTalla,
   ColaboradorRol,
+  Imagen,
 } = require("./models/index");
 
 // relaciones
@@ -42,7 +44,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
-const { validarToken } = require("./middlewares/validacion");
+const { validarToken } = require("./middlewares/validacionToken.middleware");
 
 app.listen(3000, () => {
   console.log("escuchando en el puerto 3000");
@@ -61,9 +63,10 @@ app.use("/api/relCaEs", validarToken, calzadoEstanteRoute);
 app.use("/api/relCaCo", validarToken, calzadoColorRoute);
 app.use("/api/relCaTa", validarToken, calzadoTallaRoute);
 app.use("/api/relCoRo", validarToken, colaboradorRolRoute);
+app.use("/api/imagenes", validarToken, imagenRoute);
 
 sequelize
-  .sync({ alter: true })
+  .sync({ alter : true })
   .then(async () => {
     await Colaborador.sync();
     await Color.sync();
@@ -76,6 +79,7 @@ sequelize
     await CalzadoColor.sync();
     await CalzadoTalla.sync();
     await ColaboradorRol.sync();
+    await Imagen.sync();
 
     asignarRelaciones();
     console.log("base de datos sincronizada");

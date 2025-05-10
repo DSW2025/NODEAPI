@@ -34,7 +34,7 @@ Estante.init(
       defaultValue: 0,
       validate : {
         isPositive(value) {
-          if (value <= 0.0) {
+          if (value < 0.0) {
             throw new Error("sin valores negativos");
           }
         },
@@ -42,11 +42,10 @@ Estante.init(
     },
     capacidadDisponible: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
+      allowNull: true,
       validate : {
         isPositive(value) {
-          if (value <= 0.0) {
+          if (value < 0.0) {
             throw new Error("sin valores negativos");
           }
         },

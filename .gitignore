@@ -1,0 +1,14 @@
+# node modules
+node_modules/
+
+# configuración local
+.env
+db.js
+
+# logs
+logs/
+*.log
+
+# sistema operativo
+.DS_Store
+Thumbs.db

@@ -45,8 +45,8 @@ const actualizarColor = async (req, res) => {
 const eliminarColor = async (req, res) => {
   try {
     const { id } = req.params;
-    const color = await color.findByPk(id);
-    await color.destroy();
+    const color = await Color.findByPk(id);
+    await Color.destroy();
     res.status(200).json("color eliminado");
   } catch (error) {
     res.status(400).json({ message: error.message });
