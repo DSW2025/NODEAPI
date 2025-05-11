@@ -10,11 +10,11 @@ const generar = async (req, res) => {
       where: { correoElectronico },
     });
     if (!colaborador) {
-      return res.status(400).json({ mensaje: "Colaborador no encontrado" });
+      return res.status(400).json({ mensaje: "colaborador no encontrado" });
     }
     const valida = await bcrypt.compare(contraseña, colaborador.contraseña);
     if (!valida) {
-      return res.status(400).json({ mensaje: "Contraseña incorrecta" });
+      return res.status(400).json({ mensaje: "contraseña incorrecta" });
     }
     jwt.sign(
       {
@@ -30,11 +30,14 @@ const generar = async (req, res) => {
 
         res.cookie("token", token, {
           httpOnly: true, // Impide que el token sea accesible desde JavaScript del navegador
-          secure: process.env.NODE_ENV === "production", 
+          secure: process.env.NODE_ENV === "production",
           maxAge: 24 * 60 * 60 * 1000, // 1 día
           sameSite: "Strict", // Asegura que la cookie solo se envíe en solicitudes del mismo sitio
         });
-        res.json({ mensaje: "Autenticado" });
+        res.json({
+          mensaje: "Autenticado",
+          token: token, // token en el body
+        });
       }
     );
   } catch (error) {
