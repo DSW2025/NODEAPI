@@ -19,7 +19,7 @@ CalzadoEstante.init(
         key: "codigoBarras",
       },
       onDelete: "SET NULL",
-      onUpdate: "CASCADE"
+      onUpdate: "CASCADE",
     },
     idEstante: {
       type: DataTypes.INTEGER,
@@ -29,12 +29,32 @@ CalzadoEstante.init(
         key: "idEstante",
       },
       onDelete: "SET NULL",
-      onUpdate: "CASCADE"
+      onUpdate: "CASCADE",
+    },
+    idTalla: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "talla",
+        key: "idTalla",
+      },
+      onDelete: "SET NULL",
+      onUpdate: "CASCADE",
+    },
+    idColor: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "color",
+        key: "idColor",
+      },
+      onDelete: "SET NULL",
+      onUpdate: "CASCADE",
     },
     cantidad: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue : 0
+      defaultValue: 0,
     },
   },
   {

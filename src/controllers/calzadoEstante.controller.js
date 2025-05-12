@@ -1,20 +1,30 @@
 const CalzadoEstante = require("../models/calzadoEstante.model");
-const { Estante, Calzado } = require("../models");
+const { Estante, Calzado, Talla, Color } = require("../models");
+const {
+  obtenerRelacionesDetalladas,
+} = require("../services/estanteCalzado.service");
 
 const crearRelacion = async (req, res) => {
   try {
     const relacion = await CalzadoEstante.create(req.body);
-
-    const { idEstante, codigoBarras, cantidad } = req.body;
+    const { idEstante, idTalla, idColor, codigoBarras, cantidad } = req.body;
 
     const estante = await Estante.findByPk(idEstante);
     const calzado = await Calzado.findByPk(codigoBarras);
+    const talla = await Talla.findByPk(idTalla);
+    const color = await Color.findByPk(idColor);
 
     if (!estante) {
       return res.status(404).json({ message: "estante no encontrado" });
     }
     if (!calzado) {
       return res.status(404).json({ message: "calzado no encontrado" });
+    }
+    if (!talla) {
+      return res.status(404).json({ message: "talla no encontrado" });
+    }
+    if (!color) {
+      return res.status(404).json({ message: "color no encontrado" });
     }
 
     const nuevaCapacidadOcupada = estante.capacidadOcupada + cantidad;
@@ -44,18 +54,24 @@ const actualizarRelacion = async (req, res) => {
     const nuevaCantidad = req.body.cantidad;
 
     const relacion = await CalzadoEstante.findByPk(id);
-    if (!relacion) {
-      return res.status(404).json({ message: "relacion no encontrada" });
-    }
+    const { idEstante, idTalla, idColor, codigoBarras, cantidad } = req.body;
 
-    const estante = await Estante.findByPk(relacion.idEstante);
+    const estante = await Estante.findByPk(idEstante);
+    const calzado = await Calzado.findByPk(codigoBarras);
+    const talla = await Talla.findByPk(idTalla);
+    const color = await Color.findByPk(idColor);
+
     if (!estante) {
       return res.status(404).json({ message: "estante no encontrado" });
     }
-
-    const calzado = await Calzado.findByPk(relacion.codigoBarras);
     if (!calzado) {
       return res.status(404).json({ message: "calzado no encontrado" });
+    }
+    if (!talla) {
+      return res.status(404).json({ message: "talla no encontrado" });
+    }
+    if (!color) {
+      return res.status(404).json({ message: "color no encontrado" });
     }
 
     const cantidadAnterior = relacion.cantidad;
@@ -94,7 +110,7 @@ const eliminarRelacion = async (req, res) => {
 
     const nuevaCapacidadOcupada = estante.capacidadOcupada - cantidad;
     const nuevaCapacidadDisponible = estante.capacidadDisponible + cantidad;
-    
+
     await estante.update({
       capacidadOcupada: nuevaCapacidadOcupada,
       capacidadDisponible: nuevaCapacidadDisponible,
@@ -125,10 +141,40 @@ const encontrarRelacion = async (req, res) => {
   }
 };
 
+const getRelacionesDetalladas = async (req, res) => {
+  const resultado = await obtenerRelacionesDetalladas();
+  if (!resultado.success) {
+    return res.status(500).json({ success: false, message: resultado.message });
+  }
+  res.status(200).json(resultado);
+};
+
+const getRelacionesPorEstante = async (req, res) => {
+  const { id } = req.params;
+  const resultado = await obtenerRelacionesPorEstante(id);
+  if (!resultado.success) {
+    return res.status(500).json({ success: false, message: resultado.message });
+  }
+  res.status(200).json(resultado);
+};
+
+const getRelacionesPorCalzado = async (req, res) => {
+  const { id } = req.params;
+  const resultado = await obtenerRelacionesPorCalzado(id);
+  if (!resultado.success) {
+    return res.status(500).json({ success: false, message: resultado.message });
+  }
+  res.status(200).json(resultado);
+};
+
 module.exports = {
   crearRelacion,
   encontrarRelaciones,
   encontrarRelacion,
   actualizarRelacion,
   eliminarRelacion,
+
+  getRelacionesDetalladas,
+  getRelacionesPorEstante,
+  getRelacionesPorCalzado
 };

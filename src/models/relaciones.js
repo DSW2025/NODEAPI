@@ -5,6 +5,7 @@ const {
   Talla,
   Calzado,
   Imagen,
+  CalzadoEstante,
 } = require("./index");
 
 module.exports = () => {
@@ -12,40 +13,28 @@ module.exports = () => {
   Calzado.belongsTo(Marca, { foreignKey: "idMarca" });
   Marca.hasMany(Calzado, { foreignKey: "idMarca" });
 
-  // Calzado (N...1) [N:N] (1...N) Estante
-  Calzado.belongsToMany(Estante, {
-    through: "CalzadoEstante",
-    foreignKey: "codigoBarras",
-    as: "estantes" // en lugar de llamar a la relacion como la tabla intermedia 'CalzadoEstante', recibe un alias 'estantes'
-  });
-  Estante.belongsToMany(Calzado, {
-    through: "CalzadoEstante",
-    foreignKey: "idEstante",
-    as: "calzados" // en lugar de llamar a la relacion como la tabla intermedia 'CalzadoEstante', recibe un alias 'calzados'
-  });
-
-    // Calzado (N...1) [N:N] (1...N) Talla
+  // Calzado (N...1) [N:N] (1...N) Talla
   Calzado.belongsToMany(Talla, {
     through: "CalzadoTalla",
     foreignKey: "codigoBarras",
-    as: "tallas" // en lugar de llamar a la relacion como la tabla intermedia 'CalzadoEstante', recibe un alias 'estantes'
+    as: "tallas", // en lugar de llamar a la relacion como la tabla intermedia 'CalzadoEstante', recibe un alias 'estantes'
   });
   Talla.belongsToMany(Calzado, {
     through: "CalzadoTalla",
     foreignKey: "idTalla",
-    as: "calzados" // en lugar de llamar a la relacion como la tabla intermedia 'CalzadoEstante', recibe un alias 'calzados'
+    as: "calzados", // en lugar de llamar a la relacion como la tabla intermedia 'CalzadoEstante', recibe un alias 'calzados'
   });
 
   // Calzado (N...1) [N:N] (1...N) Color
   Calzado.belongsToMany(Color, {
     through: "CalzadoColor",
     foreignKey: "codigoBarras",
-    as: "colores"
+    as: "colores",
   });
   Color.belongsToMany(Calzado, {
     through: "CalzadoColor",
     foreignKey: "idColor",
-    as: "calzados"
+    as: "calzados",
   });
 
   // Calzado (1...1) [1:1] (1...1) Imagen
@@ -55,6 +44,39 @@ module.exports = () => {
   });
   Imagen.belongsTo(Calzado, {
     foreignKey: "codigoBarras",
-    as: "calzado"
+    as: "calzado",
+  });
+
+  // Calzado (N...1) [N:N] (1...N) Estante
+  Calzado.belongsToMany(Estante, {
+    through: "CalzadoEstante",
+    foreignKey: "codigoBarras",
+    as: "estantes", // en lugar de llamar a la relacion como la tabla intermedia 'CalzadoEstante', recibe un alias 'estantes'
+  });
+  Estante.belongsToMany(Calzado, {
+    through: "CalzadoEstante",
+    foreignKey: "idEstante",
+    as: "calzados", // en lugar de llamar a la relacion como la tabla intermedia 'CalzadoEstante', recibe un alias 'calzados'
+  });
+
+  CalzadoEstante.belongsTo(Calzado, {
+    foreignKey: "codigoBarras",
+    as: "calzado",
+  });
+  CalzadoEstante.belongsTo(Estante, {
+    foreignKey: "idEstante",
+    as: "estante",
+  });
+
+  // CalzadoEstante (1...1) [1:1] (1...1) Color
+  CalzadoEstante.belongsTo(Color, {
+    foreignKey: "idColor",
+    as: "color",
+  });
+
+  // CalzadoEstante (1...1) [1:1] (1...1) Talla
+  CalzadoEstante.belongsTo(Talla, {
+    foreignKey: "idTalla",
+    as: "talla",
   });
 };
