@@ -1,4 +1,4 @@
-const { CalzadoEstante, Calzado, Color, Talla, Estante } = require("../models");
+const { CalzadoEstante, Calzado, Color, Talla, Estante, Marca } = require("../models");
 
 const obtenerRelacionesDetalladas = async () => {
   try {
