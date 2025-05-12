@@ -23,7 +23,7 @@ const subirImagen = async (req, res) => {
     const nuevaImagen = await Imagen.create({
       codigoBarras: req.body.codigoBarras,
       nombreArchivo: req.file.filename,
-      ruta: req.file.path, // ruta como 'uploads/foto123.jpg'
+      ruta: req.file.path,
     });
     res.status(201).json({ success: true, data: nuevaImagen });
   } catch (error) {

@@ -2,6 +2,7 @@ const express = require("express");
 const sequelize = require("./db");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const path = require('path');
 
 // rutas
 const {
@@ -45,6 +46,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 const { validarToken } = require("./middlewares/validacionToken.middleware");
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.listen(3000, () => {
   console.log("escuchando en el puerto 3000");
