@@ -2,6 +2,8 @@ const CalzadoEstante = require("../models/calzadoEstante.model");
 const { Estante, Calzado, Talla, Color } = require("../models");
 const {
   obtenerRelacionesDetalladas,
+  obtenerRelacionesPorEstante,
+  obtenerRelacionesPorCalzado
 } = require("../services/estanteCalzado.service");
 
 const crearRelacion = async (req, res) => {
