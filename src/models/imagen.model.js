@@ -16,10 +16,10 @@ Imagen.init(
       allowNull: true,
       references: {
         model: "calzado",
-        key: "codigoBarras"
+        key: "codigoBarras",
       },
       onDelete: "SET NULL",
-      onUpdate: "CASCADE"
+      onUpdate: "CASCADE",
     },
     nombreArchivo: {
       type: DataTypes.STRING,

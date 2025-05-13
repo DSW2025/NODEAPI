@@ -58,5 +58,5 @@ const calzadoImagen = async (id) => {
 
 module.exports = {
   opcionesDatos,
-  calzadoImagen
+  calzadoImagen,
 };
