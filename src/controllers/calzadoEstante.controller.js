@@ -1,9 +1,16 @@
 const CalzadoEstante = require("../models/calzadoEstante.model");
-const { Estante, Calzado, Talla, Color } = require("../models");
+const {
+  Estante,
+  Calzado,
+  Talla,
+  Color,
+  CalzadoTalla,
+  CalzadoColor,
+} = require("../models");
 const {
   obtenerRelacionesDetalladas,
   obtenerRelacionesPorEstante,
-  obtenerRelacionesPorCalzado
+  obtenerRelacionesPorCalzado,
 } = require("../services/estanteCalzado.service");
 
 const crearRelacion = async (req, res) => {
@@ -60,7 +67,7 @@ const actualizarRelacion = async (req, res) => {
 
     const estante = await Estante.findByPk(idEstante);
     const calzado = await Calzado.findByPk(codigoBarras);
-    const talla = await Talla.findByPk(idTalla);
+    const calzadoTalla = await CalzadoTalla(idTalla);
     const color = await Color.findByPk(idColor);
 
     if (!estante) {
@@ -74,6 +81,34 @@ const actualizarRelacion = async (req, res) => {
     }
     if (!color) {
       return res.status(404).json({ message: "color no encontrado" });
+    }
+
+    // Verificar si existe la relación calzado-talla
+    const existeRelacionTalla = await CalzadoTalla.findOne({
+      where: {
+        codigoBarras,
+        idTalla,
+      },
+    });
+
+    if (!existeRelacionTalla) {
+      return res.status(404).json({
+        message: "no existe relación entre el calzado y la talla especificada",
+      });
+    }
+
+    // Verificar si existe la relación calzado-color
+    const existeRelacionColor = await CalzadoColor.findOne({
+      where: {
+        codigoBarras,
+        idColor,
+      },
+    });
+
+    if (!existeRelacionTalla) {
+      return res.status(404).json({
+        message: "no existe relación entre el calzado y la talla especificada",
+      });
     }
 
     const cantidadAnterior = relacion.cantidad;
@@ -178,5 +213,5 @@ module.exports = {
 
   getRelacionesDetalladas,
   getRelacionesPorEstante,
-  getRelacionesPorCalzado
+  getRelacionesPorCalzado,
 };
