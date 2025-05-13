@@ -47,7 +47,6 @@ const calzadoImagen = async (id) => {
         model: Imagen,
         as: "imagen",
         attributes: ["idImagen", "nombreArchivo"],
-        through: { attributes: [] },
         required: false,
       },
     ],
