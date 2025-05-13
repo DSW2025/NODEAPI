@@ -53,12 +53,12 @@ const obtenerRelacionesPorEstante = async (idEstante) => {
         {
           model: Color,
           as: "color",
-          attributes: ["color"],
+          attributes: ["idColor", "color"],
         },
         {
           model: Talla,
           as: "talla",
-          attributes: ["talla"],
+          attributes: ["idTalla", "talla"],
         },
       ],
     });
