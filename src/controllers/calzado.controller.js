@@ -1,5 +1,5 @@
 const Calzado = require("../models/calzado.model");
-const { opcionesDatos } = require("../services/calzado.service");
+const { opcionesDatos, calzadoImagen } = require("../services/calzado.service");
 
 const crearCalzado = async (req, res) => {
   try {
@@ -58,21 +58,34 @@ const getDatos = async (req, res) => {
   try {
     const { id } = req.params;
     const calzado = await opcionesDatos(id);
-
     if (!calzado) {
       return res
         .status(404)
         .json({ success: false, message: "calzado no encontrado" });
     }
+    res.json({ success: true, data: calzado });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "error al obtener datos" });
+  }
+};
 
+const getImagen = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const calzado = await calzadoImagen(id);
+    if (!calzado) {
+      return res
+        .status(404)
+        .json({ success: false, message: "calzado no encontrada" });
+    }
+    
     res.json({ success: true, data: calzado });
   } catch (error) {
     res
       .status(500)
-      .json({ success: false, message: "error al obtener datos" });
+      .json({ success: false, message: "error al obtener los datos" });
   }
 };
-
 
 module.exports = {
   crearCalzado,
@@ -81,5 +94,6 @@ module.exports = {
   actualizarCalzado,
   eliminarCalzado,
 
-  getDatos
+  getDatos,
+  getImagen,
 };

@@ -1,7 +1,6 @@
 const { Calzado, Color, Imagen, Talla, Estante } = require("../models");
 const opcionesDatos = async (id) => {
   const calzado = await Calzado.findByPk(id, {
-    
     include: [
       {
         model: Color,
@@ -26,7 +25,28 @@ const opcionesDatos = async (id) => {
       {
         model: Estante,
         as: "estantes",
-        attributes: ["idEstante", "localizacion", "capacidadOcupada", "capacidadDisponible"],
+        attributes: [
+          "idEstante",
+          "localizacion",
+          "capacidadOcupada",
+          "capacidadDisponible",
+        ],
+        through: { attributes: [] },
+        required: false,
+      },
+    ],
+  });
+
+  return calzado;
+};
+
+const calzadoImagen = async (id) => {
+  const calzado = await Calzado.findByPk(id, {
+    include: [
+      {
+        model: Imagen,
+        as: "imagen",
+        attributes: ["idImagen", "nombreArchivo"],
         through: { attributes: [] },
         required: false,
       },
@@ -38,4 +58,5 @@ const opcionesDatos = async (id) => {
 
 module.exports = {
   opcionesDatos,
+  calzadoImagen
 };
