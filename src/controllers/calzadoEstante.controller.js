@@ -102,9 +102,9 @@ const actualizarRelacion = async (req, res) => {
       },
     });
 
-    if (!existeRelacionTalla) {
+    if (!existeRelacionColor) {
       return res.status(404).json({
-        message: "no existe relación entre el calzado y la talla especificada",
+        message: "no existe relación entre el calzado y el color especificado",
       });
     }
 
