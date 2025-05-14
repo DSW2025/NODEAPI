@@ -67,7 +67,7 @@ const actualizarRelacion = async (req, res) => {
 
     const estante = await Estante.findByPk(idEstante);
     const calzado = await Calzado.findByPk(codigoBarras);
-    const calzadoTalla = await CalzadoTalla(idTalla);
+    const calzadoTalla = await CalzadoTalla.findByPk(idTalla);
     const color = await Color.findByPk(idColor);
 
     if (!estante) {
@@ -76,14 +76,13 @@ const actualizarRelacion = async (req, res) => {
     if (!calzado) {
       return res.status(404).json({ message: "calzado no encontrado" });
     }
-    if (!talla) {
-      return res.status(404).json({ message: "talla no encontrado" });
+    if (!calzadoTalla) {
+      return res.status(404).json({ message: "talla no encontrada" });
     }
     if (!color) {
       return res.status(404).json({ message: "color no encontrado" });
     }
 
-    // Verificar si existe la relación calzado-talla
     const existeRelacionTalla = await CalzadoTalla.findOne({
       where: {
         codigoBarras,
@@ -96,8 +95,6 @@ const actualizarRelacion = async (req, res) => {
         message: "no existe relación entre el calzado y la talla especificada",
       });
     }
-
-    // Verificar si existe la relación calzado-color
     const existeRelacionColor = await CalzadoColor.findOne({
       where: {
         codigoBarras,
