@@ -76,7 +76,43 @@ const getImagen = async (req, res) => {
     if (!calzado) {
       return res
         .status(404)
-        .json({ success: false, message: "calzado no encontrada" });
+        .json({ success: false, message: "calzado no encontrado" });
+    }
+    
+    res.json({ success: true, data: calzado });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "error al obtener los datos" });
+  }
+};
+
+const getColores = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const calzado = await calzadoColor(id);
+    if (!calzado) {
+      return res
+        .status(404)
+        .json({ success: false, message: "calzado no encontrado" });
+    }
+    
+    res.json({ success: true, data: calzado });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "error al obtener los datos" });
+  }
+};
+
+const getTallas = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const calzado = await calzadoTalla(id);
+    if (!calzado) {
+      return res
+        .status(404)
+        .json({ success: false, message: "calzado no encontrado" });
     }
     
     res.json({ success: true, data: calzado });
@@ -96,4 +132,6 @@ module.exports = {
 
   getDatos,
   getImagen,
+  getColores,
+  getTallas
 };

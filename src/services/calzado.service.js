@@ -55,7 +55,40 @@ const calzadoImagen = async (id) => {
   return calzado;
 };
 
+const calzadoColor = async (id) => {
+  const calzado = await Calzado.findByPk(id, {
+    include: [
+      {
+        model: Color,
+        as: "colores",
+        attributes: ["idColor", "color"],
+        through: { attributes: [] },
+        required: false,
+      },
+    ],
+  });
+
+  return calzado;
+};
+
+const calzadoTalla = async (id) => {
+  const calzado = await Calzado.findByPk(id, {
+    include: [
+      {
+        model: Imagen,
+        as: "imagen",
+        attributes: ["idImagen", "nombreArchivo"],
+        required: false,
+      },
+    ],
+  });
+
+  return calzado;
+};
+
 module.exports = {
   opcionesDatos,
   calzadoImagen,
+  calzadoColor,
+  calzadoTalla
 };

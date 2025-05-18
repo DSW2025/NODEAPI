@@ -19,6 +19,7 @@ const {
   colaboradorRolRoute,
   logRoute,
   imagenRoute,
+  assistantRoute
 } = require("./routes/index");
 
 // modelos
@@ -66,6 +67,7 @@ app.use("/api/relCaCo", validarToken, calzadoColorRoute);
 app.use("/api/relCaTa", validarToken, calzadoTallaRoute);
 app.use("/api/relCoRo", validarToken, colaboradorRolRoute);
 app.use("/api/imagenes", validarToken, imagenRoute);
+app.use("/api/assistant", validarToken, assistantRoute);
 
 sequelize
   .sync({ alter : true })

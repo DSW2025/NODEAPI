@@ -5,7 +5,9 @@ const {
   actualizarCalzado,
   eliminarCalzado,
   getDatos,
-  getImagen
+  getImagen,
+  getColores,
+  getTallas
 } = require("../controllers/calzado.controller");
 const express = require("express");
 
@@ -15,6 +17,8 @@ router.post("/", crearCalzado);
 router.get("/", encontrarCalzados);
 router.get("/:id/datos", getDatos);
 router.get("/:id/imagen", getImagen);
+router.get("/:id/colores", getColores);
+router.get("/:id/tallas", getTallas);
 router.get("/:id", encontrarCalzado);
 router.put("/:id", actualizarCalzado);
 router.delete("/:id", eliminarCalzado);
