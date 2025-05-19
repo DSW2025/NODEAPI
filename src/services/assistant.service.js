@@ -1,29 +1,29 @@
-const { Estante, CalzadoEstante } = require('../models');
-const { sequelize } = require('../models');
+const { Estante, CalzadoEstante } = require("../models");
+const { Sequelize } = require("sequelize"); // ✅ Clase Sequelize para acceder a funciones como fn, col
 
 // Suma total de capacidad ocupada
 const getOccupiedCapacity = async () => {
-  return await Estante.sum('capacidadOcupada');
+  return await Estante.sum("capacidadOcupada");
 };
 
 // Suma total de capacidad disponible
 const getAvailableCapacity = async () => {
-  return await Estante.sum('capacidadDisponible');
+  return await Estante.sum("capacidadDisponible");
 };
 
 // Retorna el estante con mayor capacidad máxima
 const getShelfMaxCapacity = async () => {
   return await Estante.findOne({
-    order: [['capacidadMaxima', 'DESC']],
-    attributes: ['localizacion', 'capacidadMaxima'],
+    order: [["capacidadMaxima", "DESC"]],
+    attributes: ["localizacion", "capacidadMaxima"],
   });
 };
 
 // Retorna el estante con mayor capacidad disponible
 const getShelfCapacity = async () => {
   return await Estante.findOne({
-    order: [['capacidadDisponible', 'DESC']],
-    attributes: ['localizacion', 'capacidadDisponible'],
+    order: [["capacidadDisponible", "DESC"]],
+    attributes: ["localizacion", "capacidadDisponible"],
   });
 };
 
@@ -31,13 +31,13 @@ const getShelfCapacity = async () => {
 const getFootwearMostRepeat = async () => {
   const result = await CalzadoEstante.findOne({
     attributes: [
-      'codigoBarras',
-      [sequelize.fn('COUNT', sequelize.col('codigoBarras')), 'repeticiones']
+      "codigoBarras",
+      [Sequelize.fn("COUNT", Sequelize.col("codigoBarras")), "repeticiones"],
     ],
-    group: ['codigoBarras'],
-    order: [[sequelize.literal('repeticiones'), 'DESC']],
+    group: ["codigoBarras"],
+    order: [[Sequelize.literal("repeticiones"), "DESC"]],
     limit: 1,
-    raw: true
+    raw: true,
   });
 
   return result;
@@ -48,5 +48,5 @@ module.exports = {
   getAvailableCapacity,
   getShelfMaxCapacity,
   getShelfCapacity,
-  getFootwearMostRepeat
+  getFootwearMostRepeat,
 };
