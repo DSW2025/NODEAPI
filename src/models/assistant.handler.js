@@ -168,7 +168,7 @@ const intents = [
       const lista = calzados
         .map(
           (c) =>
-            `Modelo: ${c["calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["estante.localizacion"]}`
+            `Modelo: ${c.calzado?.modelo}, Código: ${c.codigoBarras}, Estante: ${c.estante?.localizacion}`
         )
         .join("\n");
       return `Los calzados disponibles de la marca ${marcaEncontrada}, son:\n${lista}`;
