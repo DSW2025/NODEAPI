@@ -127,7 +127,8 @@ const getFootwearPerMarca = async (nombreMarca) => {
         attributes: ["localizacion"],
       },
     ],
-    raw: true,
+    nest: true, // ✅ importante
+    raw: false, // ✅ evita el flat mapping que causa modelo:null
   });
 
   return result;
