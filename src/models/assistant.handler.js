@@ -6,6 +6,7 @@ const {
   getShelfCapacity,
   getFootwearMostRepeat,
   getFootwearPerColor,
+  getFootwearPerTalla
 } = require("../services/assistant.service");
 
 const intents = [
@@ -96,7 +97,7 @@ const intents = [
   },
   {
     name: "calzados_disponibles_con_talla",
-    keywords: ["calzados", "disponibles", "con", "talla"],
+    keywords: ["calzados", "disponibles", "en", "talla"],
     handler: async (question) => {
       const tallas = [
         "21",
