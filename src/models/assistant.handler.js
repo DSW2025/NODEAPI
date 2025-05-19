@@ -2,26 +2,57 @@
 const {
   getMaxCapacity,
   getOccupiedCapacity,
+  getAvailableCapacity,
+  getShelfMaxCapacity,
+  getShelfCapacity,
 } = require("../services/assistant.service");
 
 const intents = [
   {
-    name: "capacidad_maxima_estantes",
-    keywords: ["capacidad", "maxima", "estantes"],
+    // retorna la capacidad total disponible entre todos los estantes
+    name: "capacidad_total_disponible_estantes",
+    keywords: ["capacidad", "total", "disponible", "estantes"],
     handler: async () => {
-      const max = await getMaxCapacity();
-      return `La capacidad máxima actual de los estantes es ${max} unidades.`;
+      const totalDisponible = await getAvailableCapacity();
+      return `La capacidad total disponible entre todos los estantes es de ${totalDisponible} unidades.`;
     },
   },
   {
-    name: "capacidad_ocupada_estantes",
-    keywords: ["capacidad", "ocupada", "estantes"],
+    // retorna la capacidad total ocupada entre todos los estantes
+    name: "capacidad_total_ocupada_estantes",
+    keywords: ["capacidad", "total", "ocupada", "estantes"],
     handler: async () => {
-      const sum = await getOccupiedCapacity();
-      return `El espacio ocupado total en los estantes es ${sum} unidades.`;
+      const totalOcupada = await getOccupiedCapacity();
+      return `El espacio total ocupado entre todos los estantes es de ${totalOcupada} unidades.`;
     },
   },
-  // …otros intents que quieras añadir…
+  {
+    // retorna la localización del estante con mayor capacidad máxima
+    name: "capacidad_maxima_estante",
+    keywords: ["estante", "capacidad", "maxima"],
+    handler: async () => {
+      const estante = await getShelfMaxCapacity();
+      return `El estante con la mayor capacidad máxima es ${estante.localizacion} con ${estante.capacidadMaxima} unidades.`;
+    },
+  },
+  {
+    // retorna la localización del estante con mayor capacidad disponible
+    name: "capacidad_disponible_estante",
+    keywords: ["estante", "capacidad", "disponible"],
+    handler: async () => {
+      const estante = await getShelfCapacity();
+      return `El estante con mayor capacidad disponible es ${estante.localizacion} con ${estante.capacidadDisponible} unidades.`;
+    },
+  },
+
+  {
+    name: "calzado_mas_repite_dentro_estantes",
+    keywords: ["calzado", "mas", "repite", "dentro", "estantes"],
+    handler: async () => {
+      const calzado = await getFootwearMostRepeat();
+      return `El calzado con más registros dentro de los estantes es ${calzado.codigoBarras} con ${calzado.repeticiones} repeticiones.`;
+    },
+  },
 ];
 
 module.exports = { intents };

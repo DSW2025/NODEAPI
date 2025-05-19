@@ -1,4 +1,4 @@
-const { intents } = require("./assistant.handlers");
+const { intents } = require("./assistant.handler");
 
 const parseQuestion = (req, res, next) => {
   const { question } = req.body;
