@@ -10,7 +10,7 @@ const {
 
 module.exports = () => {
   // Calzado (N...1) [N:1] (1...1) Marca
-  Calzado.belongsTo(Marca, { foreignKey: "idMarca" });
+  Calzado.belongsTo(Marca, { foreignKey: "idMarca", as: "marca" });
   Marca.hasMany(Calzado, { foreignKey: "idMarca" });
 
   // Calzado (N...1) [N:N] (1...N) Talla

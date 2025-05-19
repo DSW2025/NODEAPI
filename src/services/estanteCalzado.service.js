@@ -46,6 +46,7 @@ const obtenerRelacionesPorEstante = async (idEstante) => {
           include: [
             {
               model: Marca,
+              as:"marca",
               attributes: ["marca"],
             },
           ],

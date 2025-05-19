@@ -6,7 +6,8 @@ const {
   getShelfCapacity,
   getFootwearMostRepeat,
   getFootwearPerColor,
-  getFootwearPerTalla
+  getFootwearPerTalla,
+  getFootwearPerMarca
 } = require("../services/assistant.service");
 
 const intents = [
@@ -70,28 +71,22 @@ const intents = [
         "Rosa",
         "Verde",
       ];
-
       const colorEncontrado = colores.find((c) =>
         question?.toLowerCase().includes(c.toLowerCase())
       );
-
       if (!colorEncontrado) {
         return `No se detectó ningún color válido en la pregunta.`;
       }
-
       const calzados = await getFootwearPerColor(colorEncontrado);
-
       if (calzados.length === 0) {
         return `No se encontraron calzados disponibles con el color ${colorEncontrado}.`;
       }
-
       const lista = calzados
         .map(
           (c) =>
             `Modelo: ${c["calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["estante.localizacion"]}`
         )
         .join("\n");
-
       return `Calzados disponibles en color ${colorEncontrado}: \n ${lista}`;
     },
   },
@@ -120,29 +115,63 @@ const intents = [
         "29.5",
         "30",
       ];
-
       const tallaEncontrada = tallas.find((t) =>
         question?.toLowerCase().includes(t.toLowerCase())
       );
-
       if (!tallaEncontrada) {
         return `No se detectó ninguna talla válida en la pregunta.`;
       }
-
       const calzados = await getFootwearPerTalla(tallaEncontrada);
-
       if (calzados.length === 0) {
         return `No se encontraron calzados disponibles con la talla ${tallaEncontrada}.`;
       }
-
       const lista = calzados
         .map(
           (c) =>
             `Modelo: ${c["calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["estante.localizacion"]}`
         )
         .join("\n");
-
       return `Calzados disponibles en talla ${tallaEncontrada}:\n${lista}`;
+    },
+  },
+  {
+    name: "calzados_disponibles_con_marca",
+    keywords: ["calzados", "disponibles", "marca"],
+    handler: async (question) => {
+      const marcas = [
+        "American Fire",
+        "American Polo",
+        "Apoort",
+        "Audaz",
+        "Charly",
+        "Christian Gallery",
+        "DC Shoes",
+        "Flexi",
+        "Merano",
+        "Mora Urban",
+        "Negro Total",
+        "Pirma",
+        "Pontiac",
+        "Rebook",
+        "Yuyin",
+      ];
+      const marcaEncontrada = marcas.find((m) =>
+        question?.toLowerCase().includes(m.toLowerCase())
+      );
+      if (!marcaEncontrada) {
+        return `No se detectó ninguna marca válida en la pregunta.`;
+      }
+      const calzados = await getFootwearPerMarca(marcaEncontrada);
+      if (calzados.length === 0) {
+        return `No se encontraron calzados disponibles de la marca ${marcaEncontrada}.`;
+      }
+      const lista = calzados
+        .map(
+          (c) =>
+            `Modelo: ${c["calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["estante.localizacion"]}`
+        )
+        .join("\n");
+      return `Calzados disponibles de la marca ${marcaEncontrada}:\n${lista}`;
     },
   },
 ];

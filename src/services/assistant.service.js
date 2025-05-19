@@ -69,7 +69,7 @@ const getFootwearPerColor = async (nombreColor) => {
   });
   return result;
 };
-
+// retorna los calzados que se encuentran disponibles con una talla en especifico
 const getFootwearPerTalla = async (valorTalla) => {
   const result = await CalzadoEstante.findAll({
     attributes: ["codigoBarras"],
@@ -97,6 +97,36 @@ const getFootwearPerTalla = async (valorTalla) => {
   return result;
 };
 
+// retorna los calzados que pertenecen a una marca
+const getFootwearPerMarca = async (nombreMarca) => {
+  const result = await CalzadoEstante.findAll({
+    attributes: ["codigoBarras"],
+    include: [
+      {
+        model: Calzado,
+        as: "calzado",
+        attributes: ["modelo"],
+        include: [
+          {
+            model: Marca,
+            as: "marca",
+            attributes: ["marca"],
+            where: { marca: nombreMarca },
+          },
+        ],
+      },
+      {
+        model: Estante,
+        as: "estante",
+        attributes: ["localizacion"],
+      },
+    ],
+    raw: true,
+  });
+
+  return result;
+};
+
 module.exports = {
   getOccupiedCapacity,
   getAvailableCapacity,
@@ -104,5 +134,6 @@ module.exports = {
   getShelfCapacity,
   getFootwearMostRepeat,
   getFootwearPerColor,
-  getFootwearPerTalla
+  getFootwearPerTalla,
+  getFootwearPerMarca
 };
