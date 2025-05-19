@@ -7,7 +7,7 @@ const {
   getFootwearMostRepeat,
   getFootwearPerColor,
   getFootwearPerTalla,
-  getFootwearPerMarca
+  getFootwearPerMarca,
 } = require("../services/assistant.service");
 
 const intents = [

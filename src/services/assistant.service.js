@@ -1,4 +1,11 @@
-const { Estante, CalzadoEstante, Calzado, Color, Talla, Marca } = require("../models");
+const {
+  Estante,
+  CalzadoEstante,
+  Calzado,
+  Color,
+  Talla,
+  Marca,
+} = require("../models");
 const { Sequelize } = require("sequelize"); // ✅ Clase Sequelize para acceder a funciones como fn, col
 
 // Suma total de capacidad ocupada
@@ -97,7 +104,6 @@ const getFootwearPerTalla = async (valorTalla) => {
   return result;
 };
 
-// retorna los calzados que pertenecen a una marca
 const getFootwearPerMarca = async (nombreMarca) => {
   const result = await CalzadoEstante.findAll({
     attributes: ["codigoBarras"],
@@ -135,5 +141,5 @@ module.exports = {
   getFootwearMostRepeat,
   getFootwearPerColor,
   getFootwearPerTalla,
-  getFootwearPerMarca
+  getFootwearPerMarca,
 };
