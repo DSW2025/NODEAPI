@@ -5,6 +5,7 @@ const {
   getShelfMaxCapacity,
   getShelfCapacity,
   getFootwearMostRepeat,
+  getFootwearPerColor
 } = require("../services/assistant.service");
 
 const intents = [
