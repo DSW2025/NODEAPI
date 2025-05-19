@@ -4,7 +4,7 @@ const {
   getAvailableCapacity,
   getShelfMaxCapacity,
   getShelfCapacity,
-  getFootwearMostRepeat
+  getFootwearMostRepeat,
 } = require("../services/assistant.service");
 
 const intents = [
@@ -46,11 +46,59 @@ const intents = [
   },
 
   {
+    // retorna el calzado que mas repeticiones (movimientos) tiene dentro de todos los estantes
     name: "calzado_mas_repite_dentro_estantes",
     keywords: ["calzado", "mas", "repite", "dentro", "estantes"],
     handler: async () => {
       const calzado = await getFootwearMostRepeat();
       return `El calzado con más registros dentro de los estantes es ${calzado.codigoBarras} con ${calzado.repeticiones} repeticiones.`;
+    },
+  },
+
+  { // retorna los calzados disponibles con el color que se pregunta junto con la localizacion de los mismos
+    name: "calzados_disponibles_con_color",
+    keywords: ["calzados", "disponibles", "con" , "color"],
+    handler: async (question) => {
+      // Extraer el nombre del color de la pregunta (muy simple)
+      const colores = [
+        "Amarillo",
+        "Azul",
+        "Beige",
+        "Blanco",
+        "Cafe",
+        "Gris",
+        "Morado",
+        "Multicolor",
+        "Naranja",
+        "Negro",
+        "Plata",
+        "Rojo",
+        "Rosa",
+        "Verde",
+      ];
+
+      const colorEncontrado = colores.find((c) =>
+        question.toLowerCase().includes(c.toLowerCase())
+      );
+
+      if (!colorEncontrado) {
+        return `No se detectó ningún color válido en la pregunta.`;
+      }
+
+      const calzados = await getFootwearPerColor(colorEncontrado);
+
+      if (calzados.length === 0) {
+        return `No se encontraron calzados disponibles con el color ${colorEncontrado}.`;
+      }
+
+      const lista = calzados
+        .map(
+          (c) =>
+            `Modelo: ${c["Calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["Estante.localizacion"]}`
+        )
+        .join("\n");
+
+      return `Calzados disponibles en color ${colorEncontrado}:\n${lista}`;
     },
   },
 ];

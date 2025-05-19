@@ -1,4 +1,4 @@
-const { Estante, CalzadoEstante } = require("../models");
+const { Estante, CalzadoEstante, Calzado, Color } = require("../models");
 const { Sequelize } = require("sequelize"); // ✅ Clase Sequelize para acceder a funciones como fn, col
 
 // Suma total de capacidad ocupada
@@ -43,10 +43,37 @@ const getFootwearMostRepeat = async () => {
   return result;
 };
 
+// Retorna los calzados que se encuentran disponibles con un color en especifico
+const getFootwearPerColor = async (nombreColor) => {
+  const result = await CalzadoEstante.findAll({
+    attributes: ["codigoBarras"],
+    include: [
+      {
+        model: Calzado,
+        attributes: ["modelo"],
+      },
+      {
+        model: Color,
+        attributes: ["color"],
+        where: { color: nombreColor },
+      },
+      {
+        model: Estante,
+        attributes: ["localizacion"],
+      },
+    ],
+    raw: true,
+  });
+
+  return result;
+};
+
 module.exports = {
   getOccupiedCapacity,
   getAvailableCapacity,
   getShelfMaxCapacity,
   getShelfCapacity,
   getFootwearMostRepeat,
+
+  getFootwearPerColor,
 };
