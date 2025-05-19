@@ -87,7 +87,7 @@ const intents = [
             `Modelo: ${c["calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["estante.localizacion"]}`
         )
         .join("\n");
-      return `Calzados disponibles en color ${colorEncontrado}: \n ${lista}`;
+      return `Los calzados disponibles en el color ${colorEncontrado}, son: \n ${lista}`;
     },
   },
   {
@@ -131,7 +131,7 @@ const intents = [
             `Modelo: ${c["calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["estante.localizacion"]}`
         )
         .join("\n");
-      return `Calzados disponibles en talla ${tallaEncontrada}:\n${lista}`;
+      return `Los calzados disponibles en la talla ${tallaEncontrada}, son:\n${lista}`;
     },
   },
   {
@@ -171,7 +171,7 @@ const intents = [
             `Modelo: ${c["calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["estante.localizacion"]}`
         )
         .join("\n");
-      return `Calzados disponibles de la marca ${marcaEncontrada}:\n${lista}`;
+      return `Los calzados disponibles de la marca ${marcaEncontrada}, son:\n${lista}`;
     },
   },
 ];
