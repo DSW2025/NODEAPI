@@ -112,12 +112,14 @@ const getFootwearPerMarca = async (nombreMarca) => {
         model: Calzado,
         as: "calzado",
         attributes: ["modelo"],
+        required: true, // <-- fuerza INNER JOIN
         include: [
           {
             model: Marca,
             as: "marca",
             attributes: ["marca"],
-            where: { marca: nombreMarca },
+            required: true,
+            where: { marca: nombreMarca }, // <-- filtramos por marca
           },
         ],
       },
@@ -127,10 +129,9 @@ const getFootwearPerMarca = async (nombreMarca) => {
         attributes: ["localizacion"],
       },
     ],
-    nest: true, // ✅ importante
-    raw: false, // ✅ evita el flat mapping que causa modelo:null
+    raw: false,
+    nest: true,
   });
-
   return result;
 };
 
