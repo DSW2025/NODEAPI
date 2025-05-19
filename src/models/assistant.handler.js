@@ -91,7 +91,57 @@ const intents = [
         )
         .join("\n");
 
-      return `Calzados disponibles en color ${colorEncontrado}:\n${lista}`;
+      return `Calzados disponibles en color ${colorEncontrado}: \n ${lista}`;
+    },
+  },
+  {
+    name: "calzados_disponibles_con_talla",
+    keywords: ["calzados", "disponibles", "con", "talla"],
+    handler: async (question) => {
+      const tallas = [
+        "21",
+        "21.5",
+        "22",
+        "22.5",
+        "23",
+        "23.5",
+        "24",
+        "24.5",
+        "25",
+        "25.5",
+        "26",
+        "26.5",
+        "27",
+        "27.5",
+        "28",
+        "28.5",
+        "29",
+        "29.5",
+        "30",
+      ];
+
+      const tallaEncontrada = tallas.find((t) =>
+        question?.toLowerCase().includes(t.toLowerCase())
+      );
+
+      if (!tallaEncontrada) {
+        return `No se detectó ninguna talla válida en la pregunta.`;
+      }
+
+      const calzados = await getFootwearPerTalla(tallaEncontrada);
+
+      if (calzados.length === 0) {
+        return `No se encontraron calzados disponibles con la talla ${tallaEncontrada}.`;
+      }
+
+      const lista = calzados
+        .map(
+          (c) =>
+            `Modelo: ${c["calzado.modelo"]}, Código: ${c.codigoBarras}, Estante: ${c["estante.localizacion"]}`
+        )
+        .join("\n");
+
+      return `Calzados disponibles en talla ${tallaEncontrada}:\n${lista}`;
     },
   },
 ];

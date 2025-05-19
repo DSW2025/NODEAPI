@@ -50,7 +50,7 @@ const getFootwearPerColor = async (nombreColor) => {
     include: [
       {
         model: Calzado,
-        as: "calzado", 
+        as: "calzado",
         attributes: ["modelo"],
       },
       {
@@ -70,6 +70,33 @@ const getFootwearPerColor = async (nombreColor) => {
   return result;
 };
 
+const getFootwearPerTalla = async (valorTalla) => {
+  const result = await CalzadoEstante.findAll({
+    attributes: ["codigoBarras"],
+    include: [
+      {
+        model: Calzado,
+        as: "calzado",
+        attributes: ["modelo"],
+      },
+      {
+        model: Talla,
+        as: "talla",
+        attributes: ["talla"],
+        where: { talla: valorTalla },
+      },
+      {
+        model: Estante,
+        as: "estante",
+        attributes: ["localizacion"],
+      },
+    ],
+    raw: true,
+  });
+
+  return result;
+};
+
 module.exports = {
   getOccupiedCapacity,
   getAvailableCapacity,
@@ -77,4 +104,5 @@ module.exports = {
   getShelfCapacity,
   getFootwearMostRepeat,
   getFootwearPerColor,
+  getFootwearPerTalla
 };
