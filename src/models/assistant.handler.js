@@ -1,10 +1,10 @@
 // Desestructuramos directamente las funciones de servicio
 const {
-  getMaxCapacity,
   getOccupiedCapacity,
   getAvailableCapacity,
   getShelfMaxCapacity,
   getShelfCapacity,
+  getFootwearMostRepeat
 } = require("../services/assistant.service");
 
 const intents = [

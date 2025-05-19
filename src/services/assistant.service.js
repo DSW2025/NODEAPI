@@ -1,10 +1,5 @@
 const { Estante, CalzadoEstante } = require('../models');
 
-// Suma total de capacidad máxima
-const getMaxCapacity = async () => {
-  return await Estante.sum('capacidadMaxima');
-};
-
 // Suma total de capacidad ocupada
 const getOccupiedCapacity = async () => {
   return await Estante.sum('capacidadOcupada');
@@ -48,7 +43,6 @@ const getFootwearMostRepeat = async () => {
 };
 
 module.exports = {
-  getMaxCapacity,
   getOccupiedCapacity,
   getAvailableCapacity,
   getShelfMaxCapacity,
