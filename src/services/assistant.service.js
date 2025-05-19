@@ -50,21 +50,23 @@ const getFootwearPerColor = async (nombreColor) => {
     include: [
       {
         model: Calzado,
+        as: "calzado", 
         attributes: ["modelo"],
       },
       {
         model: Color,
+        as: "color",
         attributes: ["color"],
         where: { color: nombreColor },
       },
       {
         model: Estante,
+        as: "estante",
         attributes: ["localizacion"],
       },
     ],
     raw: true,
   });
-
   return result;
 };
 
@@ -74,6 +76,5 @@ module.exports = {
   getShelfMaxCapacity,
   getShelfCapacity,
   getFootwearMostRepeat,
-
   getFootwearPerColor,
 };
