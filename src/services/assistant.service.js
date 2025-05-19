@@ -1,4 +1,5 @@
 const { Estante, CalzadoEstante } = require('../models');
+const { sequelize } = require('../models');
 
 // Suma total de capacidad ocupada
 const getOccupiedCapacity = async () => {
