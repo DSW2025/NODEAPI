@@ -1,4 +1,4 @@
-const { Estante, CalzadoEstante, Calzado, Color } = require("../models");
+const { Estante, CalzadoEstante, Calzado, Color, Talla } = require("../models");
 const { Sequelize } = require("sequelize"); // ✅ Clase Sequelize para acceder a funciones como fn, col
 
 // Suma total de capacidad ocupada
