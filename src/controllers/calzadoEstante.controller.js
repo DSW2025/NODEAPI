@@ -153,7 +153,6 @@ const actualizarRelacion = async (req, res) => {
 const eliminarRelacion = async (req, res) => {
   try {
     const { id } = req.params;
-    F;
     const relacion = await CalzadoEstante.findByPk(id);
     if (!relacion) {
       return res
