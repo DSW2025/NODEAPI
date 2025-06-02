@@ -10,11 +10,11 @@ const generar = async (req, res) => {
       where: { correoElectronico },
     });
     if (!colaborador) {
-      return res.status(400).json({ mensaje: "colaborador no encontrado" });
+      return res.status(400).json({ mensaje: "Colaborador no encontrado" });
     }
     const valida = await bcrypt.compare(contraseña, colaborador.contraseña);
     if (!valida) {
-      return res.status(400).json({ mensaje: "contraseña incorrecta" });
+      return res.status(400).json({ mensaje: "Contraseña incorrecta" });
     }
     jwt.sign(
       {

@@ -1,4 +1,3 @@
-// Desestructuramos directamente las funciones de servicio
 const {
   getOccupiedCapacity,
   getAvailableCapacity,

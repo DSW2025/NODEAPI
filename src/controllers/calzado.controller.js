@@ -1,21 +1,38 @@
 const Calzado = require("../models/calzado.model");
-const { opcionesDatos, calzadoImagen } = require("../services/calzado.service");
+const {
+  opcionesDatos,
+  calzadoImagen,
+  calzadoColor,
+  calzadoTalla,
+} = require("../services/calzado.service");
 
 const crearCalzado = async (req, res) => {
   try {
     const calzado = await Calzado.create(req.body);
-    res.status(200).json({ message: "calzado creado", calzado });
+    res
+      .status(200)
+      .json({ success: true, message: "Calzado creado", data: calzado });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(400)
+      .json({ success: false, message: "Error, no se pudo crear el calzado" });
   }
 };
 
 const encontrarCalzados = async (req, res) => {
   try {
     const calzados = await Calzado.findAll();
-    res.status(200).json(calzados);
+    if (!calzados) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Calzados no encontrados" });
+    }
+    res.status(200).json({ success: true, data: calzados });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      success: false,
+      message: "Error, no se pudo encontrar los los calzados",
+    });
   }
 };
 
@@ -23,9 +40,17 @@ const encontrarCalzado = async (req, res) => {
   try {
     const { id } = req.params;
     const calzado = await Calzado.findByPk(id);
+    if (!calzado) {
+      return res.status(404).json({
+        success: false,
+        message: "Calzado no encontrado",
+      });
+    }
     res.status(200).json(calzado);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(400)
+      .json({ success: false, message: "Error, no se encontrar el calzado" });
   }
 };
 
@@ -33,13 +58,18 @@ const actualizarCalzado = async (req, res) => {
   try {
     const { id } = req.params;
     const calzado = await Calzado.findByPk(id);
-    if (!Calzado) {
-      return res.status(404).json({ message: "calzado no encontrado" });
+    if (!calzado) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Calzado no encontrado" });
     }
-    await calzado.update(req.body, { where: { idCalzado: id } });
-    res.status(200).json("calzado actualizado");
+    await calzado.update(req.body);
+    res.status(200).json({ success: true, message: "Calzado actualizado" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      success: false,
+      message: "Error, no se pudo actualizar el calzado",
+    });
   }
 };
 
@@ -47,10 +77,20 @@ const eliminarCalzado = async (req, res) => {
   try {
     const { id } = req.params;
     const calzado = await Calzado.findByPk(id);
+    if (!calzado) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Calzado no encontrado" });
+    }
     await calzado.destroy();
-    res.status(200).json("calzado eliminado");
+    res.status(200).json({ success: true, message: "Calzado eliminado" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(400)
+      .json({
+        success: false,
+        message: "Error, no se pudo eliminar el calzado",
+      });
   }
 };
 
@@ -61,11 +101,14 @@ const getDatos = async (req, res) => {
     if (!calzado) {
       return res
         .status(404)
-        .json({ success: false, message: "calzado no encontrado" });
+        .json({ success: false, message: "Calzado no encontrado" });
     }
     res.json({ success: true, data: calzado });
   } catch (error) {
-    res.status(500).json({ success: false, message: "error al obtener datos" });
+    res.status(500).json({
+      success: false,
+      message: `No se pudieron obtener los datos del calzado ${id}`,
+    });
   }
 };
 
@@ -76,14 +119,15 @@ const getImagen = async (req, res) => {
     if (!calzado) {
       return res
         .status(404)
-        .json({ success: false, message: "calzado no encontrado" });
+        .json({ success: false, message: "Calzado no encontrado" });
     }
-    
+
     res.json({ success: true, data: calzado });
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "error al obtener los datos" });
+    res.status(500).json({
+      success: false,
+      message: `Error al obtener la imagen del calzado ${id}`,
+    });
   }
 };
 
@@ -94,14 +138,15 @@ const getColores = async (req, res) => {
     if (!calzado) {
       return res
         .status(404)
-        .json({ success: false, message: "calzado no encontrado" });
+        .json({ success: false, message: "Calzado no encontrado" });
     }
-    
+
     res.json({ success: true, data: calzado });
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "error al obtener los datos" });
+    res.status(500).json({
+      success: false,
+      message: `No se pudo obtener la lista de colores del calzado ${id}`,
+    });
   }
 };
 
@@ -112,14 +157,15 @@ const getTallas = async (req, res) => {
     if (!calzado) {
       return res
         .status(404)
-        .json({ success: false, message: "calzado no encontrado" });
+        .json({ success: false, message: "Calzado no encontrado" });
     }
-    
+
     res.json({ success: true, data: calzado });
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "error al obtener los datos" });
+    res.status(500).json({
+      success: false,
+      message: `Error al obtener la lista de tallas del calzado ${id}`,
+    });
   }
 };
 
@@ -133,5 +179,5 @@ module.exports = {
   getDatos,
   getImagen,
   getColores,
-  getTallas
+  getTallas,
 };

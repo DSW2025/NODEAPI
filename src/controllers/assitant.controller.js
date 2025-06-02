@@ -8,10 +8,9 @@ const handleQuery = async (req, res) => {
   }
 
   try {
-    const answer = await intent.handler(req.body.question); // siempre pasa la pregunta
+    const answer = await intent.handler(req.body.question);
     res.json({ answer });
   } catch (err) {
-    console.error("Error al ejecutar handler:", err);
     res.status(500).json({ answer: "Error interno al procesar tu consulta." });
   }
 };

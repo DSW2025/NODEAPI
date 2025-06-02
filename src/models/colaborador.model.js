@@ -26,11 +26,16 @@ Colaborador.init(
         isEmail: true,
       },
     },
-    contraseña : {
-      type : DataTypes.STRING,
-      allowNull : true,
-      defaultValue : "Equipo#3"
-    }
+    contraseña: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [8],
+        is: {
+          args: /^(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?]).{8,}$/,
+        },
+      },
+    },
   },
   {
     sequelize,

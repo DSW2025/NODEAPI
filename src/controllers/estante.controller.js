@@ -6,19 +6,37 @@ const {
 
 const crearEstante = async (req, res) => {
   try {
+    const { localizacion, capacidadMaxima, capacidadOcupada } = req.body;
+    if (localizacion || capacidadMaxima || capacidadOcupada) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Faltan campos requeridos" });
+    }
     const estante = await Estante.create(req.body);
-    res.status(200).json({ message: "estante creado", estante });
+    res
+      .status(200)
+      .json({ success: true, message: "Estante creado", data: estante });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(400)
+      .json({ success: false, message: "Error, no se pudo crear el estante" });
   }
 };
 
 const encontrarEstantes = async (req, res) => {
   try {
     const estantes = await Estante.findAll();
-    res.status(200).json(estantes);
+    if (!estantes) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Estantes no encontrados" });
+    }
+    res.status(200).json({ success: true, data: estantes });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      success: false,
+      message: "Error, no se pudo obtener los estantes",
+    });
   }
 };
 
@@ -26,9 +44,17 @@ const encontrarEstante = async (req, res) => {
   try {
     const { id } = req.params;
     const estante = await Estante.findByPk(id);
-    res.status(200).json(estante);
+    if (!estante) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Estante no encontrado" });
+    }
+    res.status(200).json({ success: true, data: estante });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      success: false,
+      message: "Error, no se pudo obtener el estante",
+    });
   }
 };
 
@@ -37,12 +63,19 @@ const actualizarEstante = async (req, res) => {
     const { id } = req.params;
     const estante = await Estante.findByPk(id);
     if (!estante) {
-      return res.status(404).json({ message: "estante no encontrado" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Estante no encontrado" });
     }
-    await estante.update(req.body, { where: { idEstante: id } });
-    res.status(200).json("estante actualizado");
+    const update = await estante.update(req.body);
+    res
+      .status(200)
+      .json({ success: true, message: "Estante actualizado", data: update });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      success: false,
+      message: "Error, no se pudo actualizar el estante",
+    });
   }
 };
 
@@ -50,10 +83,18 @@ const eliminarEstante = async (req, res) => {
   try {
     const { id } = req.params;
     const estante = await Estante.findByPk(id);
+    if (!estante) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Estante no encontrado" });
+    }
     await estante.destroy();
-    res.status(200).json("estante eliminado");
+    res.status(200).json({ success: true, message: "Estante eliminado" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      success: false,
+      message: "Error, no se pudo eliminar el estante",
+    });
   }
 };
 

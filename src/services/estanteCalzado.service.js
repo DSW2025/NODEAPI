@@ -22,13 +22,11 @@ const obtenerRelacionesDetalladas = async () => {
         },
       ],
     });
-
     return { success: true, data: relaciones };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
-      message: "Error al obtener relaciones detalladas",
+      message: "Error, se pudieron obtener las relaciones detalladas",
     };
   }
 };
@@ -69,7 +67,7 @@ const obtenerRelacionesPorEstante = async (idEstante) => {
     console.error(error);
     return {
       success: false,
-      message: "Error al obtener relaciones por estante",
+      message: "Error, no se pudieron obtener las relaciones por estante",
     };
   }
 };
@@ -103,7 +101,7 @@ const obtenerRelacionesPorCalzado = async (codigoBarras) => {
     console.error(error);
     return {
       success: false,
-      message: "Error al obtener relaciones por calzado",
+      message: "Error, no se puedieron obtener las relaciones por calzado",
     };
   }
 };

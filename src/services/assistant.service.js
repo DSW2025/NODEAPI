@@ -6,7 +6,7 @@ const {
   Talla,
   Marca,
 } = require("../models");
-const { Sequelize } = require("sequelize"); // ✅ Clase Sequelize para acceder a funciones como fn, col
+const { Sequelize } = require("sequelize");
 
 // Suma total de capacidad ocupada
 const getOccupiedCapacity = async () => {
@@ -119,7 +119,7 @@ const getFootwearPerMarca = async (nombreMarca) => {
             as: "marca",
             attributes: ["marca"],
             required: true,
-            where: { marca: nombreMarca }, // <-- filtramos por marca
+            where: { marca: nombreMarca }, // filtracion por marca
           },
         ],
       },

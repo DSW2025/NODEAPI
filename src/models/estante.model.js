@@ -20,36 +20,36 @@ Estante.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
-      validate : {
+      validate: {
         isPositive(value) {
-          if (value <= 0.0) {
+          if (value <= 0.0) { 
             throw new Error("sin valores negativos");
           }
         },
-      }
+      },
     },
     capacidadOcupada: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
-      validate : {
+      validate: {
         isPositive(value) {
           if (value < 0.0) {
             throw new Error("sin valores negativos");
           }
         },
-      }
+      },
     },
     capacidadDisponible: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      validate : {
+      validate: {
         isPositive(value) {
           if (value < 0.0) {
             throw new Error("sin valores negativos");
           }
         },
-      }
+      },
     },
   },
   {
