@@ -22,8 +22,8 @@ Estante.init(
       defaultValue: 0,
       validate: {
         isPositive(value) {
-          if (value <= 0.0) { 
-            throw new Error("sin valores negativos");
+          if (value <= 0.0) {
+            throw new Error("Sin valores negativos");
           }
         },
       },
@@ -35,7 +35,7 @@ Estante.init(
       validate: {
         isPositive(value) {
           if (value < 0.0) {
-            throw new Error("sin valores negativos");
+            throw new Error("Sin valores negativos");
           }
         },
       },
@@ -46,7 +46,7 @@ Estante.init(
       validate: {
         isPositive(value) {
           if (value < 0.0) {
-            throw new Error("sin valores negativos");
+            throw new Error("Sin valores negativos");
           }
         },
       },

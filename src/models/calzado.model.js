@@ -24,6 +24,18 @@ Calzado.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    costo: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      defaultValue: 0.0,
+      validate: {
+        isPositive(value) {
+          if (value < 0.0) {
+            throw new Error("Sin valores negativos");
+          }
+        },
+      },
+    },
   },
   {
     sequelize,
