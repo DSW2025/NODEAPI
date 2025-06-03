@@ -6,11 +6,17 @@ const {
 
 const crearEstante = async (req, res) => {
   try {
-    const { localizacion, capacidadMaxima, capacidadOcupada } = req.body;
-    if (localizacion || capacidadMaxima || capacidadOcupada) {
+    const { localizacion, capacidadMaxima } = req.body;
+    if (!localizacion || capacidadMaxima == null) {
       return res
-        .status(404)
+        .status(400)
         .json({ success: false, message: "Faltan campos requeridos" });
+    }
+    if (req.body.capacidadDisponible == null) {
+      req.body.capacidadDisponible = capacidadMaxima;
+    }
+    if (req.body.capacidadOcupada == null) {
+      req.body.capacidadOcupada = capacidadMaxima;
     }
     const estante = await Estante.create(req.body);
     res
