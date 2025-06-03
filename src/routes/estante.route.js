@@ -6,19 +6,19 @@ const {
   eliminarEstante,
 
   getCapacidades,
-  getCalzados
+  getCalzados,
 } = require("../controllers/estante.controller");
 const express = require("express");
+const { autorizarRoles } = require("../middlewares/validacionRol.middleware");
 
 const router = express.Router();
 
-// DE LO GENERAL A LO ESPECIFICO
-router.post("/", crearEstante);
-router.get("/", encontrarEstantes);
-router.get("/capacidades", getCapacidades);
-router.get("/:id", encontrarEstante);
-router.put("/:id", actualizarEstante);
-router.delete("/:id", eliminarEstante);
-router.get("/:id/calzados", getCalzados);
+router.post("/", autorizarRoles("admin"), crearEstante);
+router.get("/", autorizarRoles("empleado", "admin"), encontrarEstantes);
+router.get("/capacidades", autorizarRoles("empleado", "admin"), getCapacidades);
+router.get("/:id", autorizarRoles("empleado", "admin"), encontrarEstante);
+router.put("/:id", autorizarRoles("admin"), actualizarEstante);
+router.delete("/:id", autorizarRoles("admin"), eliminarEstante);
+router.get("/:id/calzados", autorizarRoles("empleado", "admin"), getCalzados);
 
 module.exports = router;

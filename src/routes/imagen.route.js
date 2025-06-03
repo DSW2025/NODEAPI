@@ -10,10 +10,10 @@ const almacenarImagen = require("../middlewares/subidaArchivo.middleware");
 
 const router = express.Router();
 
-router.post("/subir", almacenarImagen.single("imagen"), subirImagen);
-router.get("/", encontrarImagenes);
-router.get("/:id", encontrarImagen);
-router.put("/:id", actualizarImagen);
-router.delete("/:id", eliminarImagen);
+router.post("/subir", autorizarRoles("empleado", "admin"), almacenarImagen.single("imagen"), subirImagen);
+router.get("/", autorizarRoles("empleado", "admin"), encontrarImagenes);
+router.get("/:id", autorizarRoles("empleado", "admin"), encontrarImagen);
+router.put("/:id", autorizarRoles("empleado", "admin"), actualizarImagen);
+router.delete("/:id", autorizarRoles("empleado", "admin"), eliminarImagen);
 
 module.exports = router;

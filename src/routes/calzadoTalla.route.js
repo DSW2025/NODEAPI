@@ -6,13 +6,14 @@ const {
   eliminarRelacion,
 } = require("../controllers/calzadoTalla.controller");
 const express = require("express");
+const { autorizarRoles } = require("../middlewares/validacionRol.middleware");
 
 const router = express.Router();
 
-router.post("/", crearRelacion);
-router.get("/", encontrarRelaciones);
-router.get("/:id", encontrarRelacion);
-router.put("/:id", actualizarRelacion);
-router.delete("/:id", eliminarRelacion);
+router.post("/", autorizarRoles("empleado", "admin"), crearRelacion);
+router.get("/", autorizarRoles("empleado", "admin"), encontrarRelaciones);
+router.get("/:id", autorizarRoles("empleado", "admin"), encontrarRelacion);
+router.put("/:id", autorizarRoles("empleado", "admin"), actualizarRelacion);
+router.delete("/:id", autorizarRoles("empleado", "admin"), eliminarRelacion);
 
 module.exports = router;

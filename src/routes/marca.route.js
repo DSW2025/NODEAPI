@@ -6,13 +6,14 @@ const {
   eliminarMarca,
 } = require("../controllers/marca.controller");
 const express = require("express");
+const { autorizarRoles } = require("../middlewares/validacionRol.middleware");
 
 const router = express.Router();
 
-router.post("/", crearMarca);
-router.get("/", encontrarMarcas);
-router.get("/:id", encontrarMarca);
-router.put("/:id", actualizarMarca);
-router.delete("/:id", eliminarMarca);
+router.post("/", autorizarRoles("admin"), crearMarca);
+router.get("/", autorizarRoles("empleado", "admin"), encontrarMarcas);
+router.get("/:id", autorizarRoles("empleado", "admin"), encontrarMarca);
+router.put("/:id", autorizarRoles("admin"), actualizarMarca);
+router.delete("/:id", autorizarRoles("admin"), eliminarMarca);
 
 module.exports = router;

@@ -24,9 +24,10 @@ const generar = async (req, res) => {
       {
         id: colaborador.idColaborador,
         correoElectronico: colaborador.correoElectronico,
+        rol: colaborador.rol
       },
       TOKEN_SECRET,
-      { expiresIn: "1d" }, // Token expira en 1 dia
+      { expiresIn: "1d" },
       (err, token) => {
         if (err) {
           return res.status(500).json({ mensaje: "Error al generar el token" });

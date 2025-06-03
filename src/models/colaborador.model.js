@@ -36,6 +36,11 @@ Colaborador.init(
         },
       },
     },
+    rol: {
+      type: DataTypes.ENUM("empleado", "admin"),
+      allowNull: false,
+      defaultValue: "empleado",
+    },
   },
   {
     sequelize,

@@ -59,13 +59,13 @@ app.use("/api", logRoute);
 app.use("/api/colores", validarToken, colorRoute);
 app.use("/api/estantes", validarToken, estanteRoute);
 app.use("/api/marcas", validarToken, marcaRoute);
-app.use("/api/roles", validarToken, rolRoute);
+app.use("/api/roles", validarToken, rolRoute); // no sirve
 app.use("/api/tallas", validarToken, tallaRoute);
 app.use("/api/calzados", validarToken, calzadoRoute);
 app.use("/api/relCaEs", validarToken, calzadoEstanteRoute);
 app.use("/api/relCaCo", validarToken, calzadoColorRoute);
 app.use("/api/relCaTa", validarToken, calzadoTallaRoute);
-app.use("/api/relCoRo", validarToken, colaboradorRolRoute);
+app.use("/api/relCoRo", validarToken, colaboradorRolRoute); // tampoco sirve
 app.use("/api/imagenes", validarToken, imagenRoute);
 app.use("/api/assistant", validarToken, assistantRoute);
 
