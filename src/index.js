@@ -1,10 +1,11 @@
-require("dotenv").config();
 const express = require("express");
 const sequelize = require("./db");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
-
+require("dotenv").config({
+  path: path.resolve(__dirname, ".env"),
+});
 
 // rutas
 const {
