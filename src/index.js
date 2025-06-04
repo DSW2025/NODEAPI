@@ -1,8 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const sequelize = require("./db");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const path = require('path');
+const path = require("path");
+
 
 // rutas
 const {
@@ -19,7 +21,8 @@ const {
   colaboradorRolRoute,
   logRoute,
   imagenRoute,
-  assistantRoute
+  assistantRoute,
+  paymentRoute,
 } = require("./routes/index");
 
 // modelos
@@ -47,7 +50,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 const { validarToken } = require("./middlewares/validacionToken.middleware");
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.listen(3000, () => {
   console.log("escuchando en el puerto 3000");
@@ -69,8 +72,10 @@ app.use("/api/relCoRo", validarToken, colaboradorRolRoute); // tampoco sirve
 app.use("/api/imagenes", validarToken, imagenRoute);
 app.use("/api/assistant", validarToken, assistantRoute);
 
+app.use("/api/create_payment_intent", validarToken, paymentRoute);
+
 sequelize
-  .sync({ alter : true })
+  .sync({ alter: true })
   .then(async () => {
     await Colaborador.sync();
     await Color.sync();
