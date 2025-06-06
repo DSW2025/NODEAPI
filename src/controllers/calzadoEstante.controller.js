@@ -15,7 +15,6 @@ const {
 
 const crearRelacion = async (req, res) => {
   try {
-    const relacion = await CalzadoEstante.create(req.body);
     const { idEstante, idTalla, idColor, codigoBarras, cantidad } = req.body;
 
     const estante = await Estante.findByPk(idEstante);
@@ -51,6 +50,7 @@ const crearRelacion = async (req, res) => {
         message: "No hay suficiente espacio en el estante",
       });
     }
+    const relacion = await CalzadoEstante.create(req.body);
     await estante.update({
       capacidadOcupada: nuevaCapacidadOcupada,
       capacidadDisponible: nuevaCapacidadDisponible,
@@ -211,12 +211,10 @@ const encontrarRelacion = async (req, res) => {
       data: relacion,
     });
   } catch (error) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: "Error, no se pudo obtener la relacion ",
-      });
+    res.status(400).json({
+      success: false,
+      message: "Error, no se pudo obtener la relacion ",
+    });
   }
 };
 
